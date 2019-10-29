@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "Crazyhorse23!",
+  password: "itsasecret!",
   database: "bamazon"
 });
 
@@ -57,7 +57,7 @@ function questions (res) {
         if (answers.Many > res[0].stock_quantity){
             console.log("We don't have enough stock!")
             // process.end()
-            // questions()
+            queryInventory()
         }
         else {updatedQuantity = res[0].stock_quantity - answers.Many
         updateInventory = connection.query("UPDATE products SET ? WHERE ?", [{stock_quantity: updatedQuantity},{item_ID: answers.ID}])

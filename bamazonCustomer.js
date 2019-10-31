@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var keys = require("./keys.js");
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -8,21 +9,20 @@ var connection = mysql.createConnection({
   port: 3306,
 
   // Your username
-  user: "root",
+  user: keys.mysql.user,
 
   // Your password
-  password: "itsasecret!",
+  password: keys.mysql.password,
   database: "bamazon"
 });
 
 connection.connect(function(err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId);
     queryInventory();
   });
 
 function queryInventory() {
-    connection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function(err, res){
+    connection.query("SELECT item_id, product_name, price FROM products", function(err, res){
         if (err) throw err;
         console.table(res)
         console.log(questions(res));
@@ -51,12 +51,11 @@ function questions (res) {
         }
     ])
     .then 
-    // (decisionResults(answers))
+
     (function(answers){
         connection.query("SELECT * FROM products WHERE item_id=?", answers.ID, (err, res) => {
         if (answers.Many > res[0].stock_quantity){
             console.log("We don't have enough stock!")
-            // process.end()
             queryInventory()
         }
         else {updatedQuantity = res[0].stock_quantity - answers.Many
@@ -68,17 +67,3 @@ function questions (res) {
 
     )
 }
-
-// function decisionResults(answers){
-//     connection.query("SELECT * FROM products WHERE item_id=?", answers.ID, (err, res) => {
-//         if (answers.Many > res[0].stock_quantity){
-//             console.log("We don't have enough stock!")
-//         questions()
-//         }
-//             else {updatedQuantity = res[0].stock_quantity - answers.Many
-//                 updateInventory = connection.query("UPDATE products SET ? WHERE ?", [{stock_quantity: updatedQuantity},{item_ID: answers.ID}])
-//                 console.log("Stock has been updated!")
-                
-//                 }})
-//             }
-        

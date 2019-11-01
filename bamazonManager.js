@@ -100,12 +100,17 @@ function addInventory(res){
     ])
     .then
     (function(answers){
+        // console.log(answers.ID)
+        connection.query("SELECT * FROM products WHERE item_id=?", answers.ID, (err, res) => {
         var updatedQuantity = parseInt(res[0].stock_quantity) + parseInt(answers.howMany)
         updateInventory = connection.query("UPDATE products SET ? WHERE ?", [{stock_quantity: updatedQuantity},{item_id: answers.ID}])
+        // console.log(parseInt(res[0].stock_quantity))
+        // var updatedQuantity = parseInt(answers.ID.stock_quantity) + parseInt(answers.howMany)
         console.log("Stock has been updated!")
+        
     })
     })
-}
+})}
 
 function addItem(){
         addAnItem = connection.query("INSERT INTO procucts SET ?", function(err, res){

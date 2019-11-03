@@ -100,12 +100,9 @@ function addInventory(res){
     ])
     .then
     (function(answers){
-        // console.log(answers.ID)
         connection.query("SELECT * FROM products WHERE item_id=?", answers.ID, (err, res) => {
         var updatedQuantity = parseInt(res[0].stock_quantity) + parseInt(answers.howMany)
         updateInventory = connection.query("UPDATE products SET ? WHERE ?", [{stock_quantity: updatedQuantity},{item_id: answers.ID}])
-        // console.log(parseInt(res[0].stock_quantity))
-        // var updatedQuantity = parseInt(answers.ID.stock_quantity) + parseInt(answers.howMany)
         console.log("Stock has been updated!")
         
     })
@@ -118,7 +115,7 @@ function addItem(){
                 {
                     name: "new",
                     type: "input",
-                    message: "Please add in the product name, department name, price, and how much stock for the new item. Also make sure you add in a comma after each column title!"
+                    message: "Please add in the item id, product name, department name, price, and how much stock for the new item. Also make sure you add in a comma after each column title!"
                 }
             ])
             .then

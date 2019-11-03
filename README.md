@@ -1,7 +1,7 @@
 # Bamazon-Updated
 
-This is the link to the [GitHub page!] ()
-Here's the link to the Bamazon demonstration [video!] ()
+This is the link to the [Github] (https://margosij.github.io/Bamazon-Updated/) page!
+Here's the link to the Bamazon demonstration [video!] (https://youtu.be/qrROJ-UVpd0)
 
 I decided to complete the first two parts of the Bamazon app and their purposes are shown below:
 
